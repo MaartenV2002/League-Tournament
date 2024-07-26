@@ -3,7 +3,7 @@ name: 'league_tournament_manager'
 services:
   bot:
     build:
-      context: ./src/bot
+      context: ./bot
       dockerfile: Dockerfile
     volumes:
       - ./src/bot:/app

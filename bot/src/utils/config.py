@@ -6,7 +6,7 @@ from discord import Intents
 class Config:
     def __init__(self):
         self.config = {}
-        self.filepath = Path(__file__).resolve().parents[1] / '.env'
+        self.filepath = Path(__file__).resolve().parents[2] / '.env'
         self.load()
 
     def load(self):
