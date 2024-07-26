@@ -1,0 +1,9 @@
+version: '3.8'
+name: 'league_tournament_manager'
+services:
+  bot:
+    build:
+      context: ./src/bot
+      dockerfile: Dockerfile
+    volumes:
+      - ./src/bot:/app
