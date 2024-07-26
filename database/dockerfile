@@ -1,0 +1,10 @@
+FROM postgres:16.2
+
+ENV POSTGRES_PASSWORD=dev
+ENV POSTGRES_USER=dev
+ENV POSTGRES_DB=DB
+
+COPY sql /docker-entrypoint-initdb.d/
+
+EXPOSE 5432
+

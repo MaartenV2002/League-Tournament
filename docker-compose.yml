@@ -6,4 +6,21 @@ services:
       context: ./bot
       dockerfile: Dockerfile
     volumes:
-      - ./src/bot:/app
+      - ./bot/src:/app
+  database:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    container_name: postgres_container
+    environment:
+      POSTGRES_PASSWORD: dev
+      POSTGRES_USER: dev
+      POSTGRES_DB: DB
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+      driver: local
