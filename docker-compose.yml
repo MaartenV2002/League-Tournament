@@ -15,7 +15,7 @@ services:
     environment:
       POSTGRES_PASSWORD: dev
       POSTGRES_USER: dev
-      POSTGRES_DB: DB
+      POSTGRES_DB: TournamentDB
     ports:
       - "5432:5432"
     volumes:
