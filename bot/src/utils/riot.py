@@ -8,15 +8,15 @@ class Riot:
         self.config = Config()
         self.api_key = self.config.get('riot', 'api_key')
         self.base_url = 'https://europe.api.riotgames.com'
-        self.account_url = '/riot/account/v1/accounts/by-riot-id/{game_name}/{tag_line}'
+        self.account_url = '/riot/account/v1/accounts/by-riot-id/{summoner_name}/{tag_line}'
 
-    def account_exists(self, game_name: str, tag_line: str) -> int | None:
+    def account_exists(self, summoner_name: str, tag_line: str) -> int | None:
         """
         Check if an account exists for the given game name and tag line.
         If the account exists, return the account puuid.
         If the account does not exist, return None. 
         """
-        url = self.base_url + self.account_url.format(game_name=game_name, tag_line=tag_line)
+        url = self.base_url + self.account_url.format(summoner_name=summoner_name, tag_line=tag_line)
         params = {
             'api_key': self.api_key
         }

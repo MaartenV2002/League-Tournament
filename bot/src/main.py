@@ -1,11 +1,11 @@
 import logging
 
 from discord.ext import commands
+from discord.ext.commands.context import Context
+from discord.member import Member
 
 from utils.config import Config
-from database.types import Role
-from database.models import Player
-from database.helpers import create_db_session
+from src.bot_functions.set_initial_data import set_player_username, set_player_role, create_new_player
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -24,23 +24,34 @@ def main():
         server_ifo = '\n    - '.join([f'{server.name} (id: {server.id})' for server in bot.guilds])
         logger.info(f'Connected to the following servers:\n    - {server_ifo}')
 
+
+    @bot.event
+    async def on_member_join(member: Member):
+        create_new_player(member)
+        # Possibly add a welcome message here
+
+
+    @bot.event
+    async def on_member_remove(member: Member):
+        print(f'{member} has left the server!')
+
+
+    @bot.command(name='username')
+    async def set_username(ctx: Context, arg: str):
+        message = set_player_username(ctx, arg)
+        return await ctx.send(message)
+
+
+    @bot.command(name='role')
+    async def set_role(ctx: Context, arg: str):
+        message = set_player_role(ctx, arg)
+        return await ctx.send(message)
+
+
     @bot.command(name='ping')
     async def ping(ctx):
         await ctx.send('Pong!')
 
-    @bot.command(name='create-player')
-    async def create_player(ctx, summoner_name: str, role: str):
-        if role not in Role.__members__:
-            return await ctx.send(f'Invalid role {role}. Valid roles are {", ".join(Role.__members__)}')
-        new_player = Player(
-            summoner_name=summoner_name,
-            role=Role[role].value
-        )
-        with create_db_session() as session, session.begin():
-            session.add(new_player)
-            session.commit()
-            session.close()
-            return await ctx.send(f'Created player with name {summoner_name} and role {role}')
 
     bot.run(token)
 
