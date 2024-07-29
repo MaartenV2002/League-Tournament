@@ -1,1 +1,1 @@
-CREATE TYPE roles AS ENUM ( 'top', 'jungle', 'mid', 'adc', 'support' );
+CREATE TYPE roles AS ENUM ( 'TOP', 'JUNGLE', 'MID', 'ADC', 'SUPPORT' );
